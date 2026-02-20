@@ -1,29 +1,24 @@
 class Solution {
   public:
-    int calculateMaxPoints(int day, int last, vector<vector<int>>& mat, vector<vector<int>>& dp) {
-        if (dp[day][last] != -1) return dp[day][last];
-        if (day == 0) {
-            int maxm = 0;
-            for (int task = 0; task < 3; task++) {
-                if (task != last) {
-                    maxm = max(maxm, mat[0][task]);
+    int maximumPoints(vector<vector<int>>& mat) {
+        int n = mat.size();
+        vector<int> prev(4, 0);
+        prev[0] = max(mat[0][1], mat[0][2]);
+        prev[1] = max(mat[0][0], mat[0][2]);
+        prev[2] = max(mat[0][0], mat[0][1]);
+        prev[3] = max(mat[0][0], max(mat[0][1], mat[0][2]));
+        for (int day = 1; day < n; day++) {
+            vector<int> temp (4, 0);
+            for (int last = 0; last < 4; last++) {
+                temp[last] = 0;
+                for (int task = 0; task < 3; task++) {
+                    if (task != last) {
+                        temp[last] = max(temp[last], mat[day][task] + prev[task]);
+                    }
                 }
             }
-            return dp[0][last] = maxm;
+            prev = temp;
         }
-        int maxm = 0;
-        for (int task = 0; task < 3; task++) {
-            if (task != last) {
-                int point = mat[day][task] + calculateMaxPoints(day-1, task, mat, dp);
-                maxm = max(maxm, point);
-            }
-        }
-        return dp[day][last] = maxm;
-    }
-    int maximumPoints(vector<vector<int>>& mat) {
-        // code here
-        int n = mat.size();
-        vector<vector<int>> dp(n, vector<int> (4, -1));
-        return calculateMaxPoints(n-1, 3, mat, dp);
+        return prev[3];
     }
 };
