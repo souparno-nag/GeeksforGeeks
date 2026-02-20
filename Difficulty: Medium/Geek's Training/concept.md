@@ -85,8 +85,8 @@ f(day, last) {
 }
 ```
 
-Time Complexity = O(N*4*3)
-Space Complexity = O(N) {stack space} + O(N*4)
+Time Complexity = O(Nx4x3)
+Space Complexity = O(N) {stack space} + O(Nx4)
 
 ## Bottom Up Dynamic Programming
 
@@ -116,8 +116,8 @@ for (day = 1 -> N-1) {
 return dp[N-1][3]
 ```
 
-Time Complexity = O(N*4*3)
-Space Complexity = O(N*4)
+Time Complexity = O(Nx4x3)
+Space Complexity = O(Nx4)
 
 ## Space Optimization
 
@@ -147,5 +147,5 @@ for (day = 1 -> N-1) {
 return dp[N-1][3]
 ```
 
-Time Complexity = O(N*4*3)
+Time Complexity = O(Nx4x3)
 Space Complexity = O(4)
