@@ -69,3 +69,33 @@ class Solution {
     }
 };
 ```
+
+```cpp
+class Solution {
+  public:
+    int countSubsetWithSumK (vector<int>& arr, int target) {
+        int n = arr.size();
+        // define dp
+        vector<int> dp (target + 1, 0), temp (target + 1, 0);
+        // Base case for first element
+        dp[0] = 1;                     // empty subset
+        if (arr[0] <= target) {
+            dp[arr[0]] += 1;           // subset containing only arr[0]
+        }
+        // build the table
+        for (int ind = 1; ind < n; ind++) {
+            for (int sum = 0; sum <= target; sum++) {
+                int notPick = dp[sum];
+                int pick = 0;
+                if (arr[ind] <= sum) pick = dp[sum-arr[ind]];
+                temp[sum] = pick + notPick;
+            }
+            dp = temp;
+        }
+        return dp[target];
+    }
+    int perfectSum(vector<int>& arr, int target) {
+        return countSubsetWithSumK(arr, target);
+    }
+};
+```
