@@ -149,3 +149,41 @@ int main() {
 	return 0;
 }
 ```
+
+## Further Optimised
+
+```cpp
+#include <iostream>
+#include <limits.h>
+#include <vector>
+using namespace std;
+
+int knapsack(vector<int>& value, vector<int>& weight, int W) {
+	int n = weight.size();
+	// define dp table
+	vector<int> dp(W+1, 0);
+	// base case
+	for (int i = weight[0]; i <= W; i++) dp[i] = value[0];
+	// build dp table
+	for (int ind = 1; ind < n; ind++) {
+		for (int w = W; w >= 0; w--) {
+			int notPick = dp[w];
+			int pick = INT_MIN;
+			if (weight[ind] <= w) pick = value[ind] + dp[w-weight[ind]];
+			dp[w] = max(pick, notPick);
+		}
+	}
+	return dp[W];
+}
+
+
+int main() {
+	int n, W;
+	cin >> n >> W;
+	vector<int> value(n), weight(n);
+	for (int i = 0; i < n; i++) cin >> value[i];
+	for (int i = 0; i < n; i++) cin >> weight[i];
+	cout << knapsack(value, weight, W);
+	return 0;
+}
+```
