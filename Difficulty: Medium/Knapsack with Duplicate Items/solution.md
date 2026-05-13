@@ -54,3 +54,6 @@ class Solution {
     }
 };
 ```
+
+> Note: Base case can also be written as:
+> for (int w = 0; w <= capacity; w++) dp[0][w] = (w/wt[0]) * val[w];
