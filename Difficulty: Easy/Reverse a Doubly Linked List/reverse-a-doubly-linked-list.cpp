@@ -16,17 +16,13 @@ class Node {
 class Solution {
   public:
     Node *reverse(Node *head) {
-        stack<int> st;
-        Node* temp = head;
-        while (temp != nullptr) {
-            st.push(temp -> data);
-            temp = temp -> next;
-        }
-        temp = head;
-        while (temp != nullptr) {
-            temp -> data = st.top();
-            st.pop();
-            temp = temp -> next;
+        Node* curr = head;
+        while (curr != nullptr) {
+            Node* last = curr -> prev;
+            curr -> prev = curr -> next;
+            curr -> next = last;
+            if (curr -> prev == nullptr) head = curr;
+            curr = curr -> prev;
         }
         return head;
     }
