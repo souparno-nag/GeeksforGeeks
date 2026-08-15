@@ -13,30 +13,28 @@
 class Solution {
   public:
     Node* segregate(Node* head) {
-        int count0 = 0, count1 = 0, count2 = 0;
+        Node* zeroHead = new Node(-1);
+        Node* oneHead = new Node(-1);
+        Node* twoHead = new Node(-1);
+        Node *zero = zeroHead, *one = oneHead, *two = twoHead;
         Node* temp = head;
         while (temp != nullptr) {
-            if (temp->data == 0) count0++;
-            else if (temp->data == 1) count1++;
-            else if (temp->data == 2) count2++;
-            temp = temp->next;
-        }
-        temp = head;
-        while (temp != nullptr) {
-            if (count0) {
-                temp->data = 0;
-                count0--;
-            }
-            else if (count1) {
-                temp->data = 1;
-                count1--;
-            }
-            else if (count2) {
-                temp->data = 2;
-                count2--;
+            int val = temp->data;
+            if (val == 0) {
+                zero->next = new Node(val);
+                zero = zero->next;
+            } else if (val == 1) {
+                one->next = new Node(val);
+                one = one->next;
+            } else if (val == 2) {
+                two->next = new Node(val);
+                two = two->next;
             }
             temp = temp->next;
         }
-        return head;
+        zero->next = (oneHead->next) ? (oneHead->next) : (twoHead->next);
+        one->next = twoHead->next;
+        two->next = nullptr;
+        return zeroHead->next;
     }
 };
